@@ -1,0 +1,79 @@
+/*
+ * stm32f407xx_gpio_driver.h
+ *
+ *  Created on: 23 Apr 2019
+ *      Author: ARUN
+ */
+
+#ifndef INC_STM32F407XX_GPIO_DRIVER_H_
+#define INC_STM32F407XX_GPIO_DRIVER_H_
+
+
+#include "stm32f407xx.h"
+
+/*
+ * This is a configuration structure for a GPIO pin
+ */
+typedef struct _GPIO_PinConfig_t
+{
+	uint8_t GPIO_PinNumber;              /*!< GPIO pin number */
+	uint8_t GPIO_PinMode;                /*!< GPIO pin mode */
+	uint8_t GPIO_PinSpeed;               /*!< GPIO pin speed */
+	uint8_t GPIO_PinPuPdControl;         /*!< GPIO pin pull up or pull down control */
+	uint8_t GPIO_PinOPType;              /*!< GPIO pin output type */
+	uint8_t GPIO_PinAltFunction;         /*!< GPIO pin alternate function */
+}GPIO_PinConfig_t;
+
+/*
+ * This is a handle structure for a GPIO pin.
+ */
+typedef struct _GPIO_Handle_t
+{
+	GPIO_RegDef_t *pGPIOx;               /*!< This holds the base address of the GPIO port to which the pin belongs */
+	GPIO_PinConfig_t GPIO_PinConfig;     /*!< This holds the GPIO pin configuration settings */
+}GPIO_Handle_t;
+
+/*********************************************************************************************
+ *                                APIS supported by this driver
+ *        For more information about the APIs please check the function definitions
+ *********************************************************************************************/
+
+/*
+ * Peripheral Clock Setup
+ */
+
+void GPIO_PeriClockControl(void);
+
+/*
+ * Init and Deinit
+ */
+void GPIO_Init(void);
+void GPIO_Deinit(void);
+
+/*
+ * Data read and write
+ */
+
+void GPIO_ReadFromInputPin(void);
+void GPIO_ReadFromInputPort(void);
+void GPIO_WriteToOuputPin(void);
+void GPIO_WriteToOutputPort(void);
+void GPIO_ToggleOutPin(void);
+
+/*
+ * IRQ configuration and ISR Handling
+ */
+
+void GPIO_IRQConfig(void);
+void GPIO_IRQHandling(void);
+
+
+
+
+
+
+
+
+
+
+#endif /* INC_STM32F407XX_GPIO_DRIVER_H_ */

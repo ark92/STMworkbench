@@ -1,0 +1,29 @@
+09:54:05 **** Incremental Build of configuration Debug for project Project_1 ****
+make -j4 all 
+Building file: ../src/003led_button_ext.c
+Building file: ../drivers/src/stm32f407xx_gpio_driver.c
+Invoking: MCU GCC Compiler
+Invoking: MCU GCC Compiler
+G:\PersonalWork\udemy\UDEMY_MCU_1\Workspace\STMworkbench\Project_1\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -I"G:/PersonalWork/udemy/UDEMY_MCU_1/Workspace/STMworkbench/Project_1/drivers/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/003led_button_ext.d" -MT"src/003led_button_ext.o" -o "src/003led_button_ext.o" "../src/003led_button_ext.c"
+G:\PersonalWork\udemy\UDEMY_MCU_1\Workspace\STMworkbench\Project_1\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -I"G:/PersonalWork/udemy/UDEMY_MCU_1/Workspace/STMworkbench/Project_1/drivers/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"drivers/src/stm32f407xx_gpio_driver.d" -MT"drivers/src/stm32f407xx_gpio_driver.o" -o "drivers/src/stm32f407xx_gpio_driver.o" "../drivers/src/stm32f407xx_gpio_driver.c"
+Finished building: ../src/003led_button_ext.c
+ 
+Finished building: ../drivers/src/stm32f407xx_gpio_driver.c
+ 
+Building target: Project_1.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"G:/PersonalWork/udemy/UDEMY_MCU_1/Workspace/STMworkbench/Project_1/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Project_1.elf" @"objects.list"   -lm
+Finished building target: Project_1.elf
+ 
+make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "Project_1.elf" "Project_1.bin"
+arm-none-eabi-size "Project_1.elf"
+   text	   data	    bss	    dec	    hex	filename
+   2360	   1080	   1092	   4532	   11b4	Project_1.elf
+ 
+
+09:54:11 Build Finished (took 6s.18ms)
+

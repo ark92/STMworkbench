@@ -1,0 +1,79 @@
+/*
+ * stm32f407xx_gpio_driver.h
+ *
+ *  Created on: 23 Apr 2019
+ *      Author: ARUN
+ */
+
+#ifndef INC_STM32F407XX_GPIO_DRIVER_H_
+#define INC_STM32F407XX_GPIO_DRIVER_H_
+
+
+#include "stm32f407xx.h"
+
+/*
+ * This is a configuration structure for a GPIO pin
+ */
+typedef struct _GPIO_PinConfig_t
+{
+	uint8_t GPIO_PinNumber;              /*!< GPIO pin number */
+	uint8_t GPIO_PinMode;                /*!< GPIO pin mode */
+	uint8_t GPIO_PinSpeed;               /*!< GPIO pin speed */
+	uint8_t GPIO_PinPuPdControl;         /*!< GPIO pin pull up or pull down control */
+	uint8_t GPIO_PinOPType;              /*!< GPIO pin output type */
+	uint8_t GPIO_PinAltFunction;         /*!< GPIO pin alternate function */
+}GPIO_PinConfig_t;
+
+/*
+ * This is a handle structure for a GPIO pin.
+ */
+typedef struct _GPIO_Handle_t
+{
+	GPIO_RegDef_t *pGPIOx;               /*!< This holds the base address of the GPIO port to which the pin belongs */
+	GPIO_PinConfig_t GPIO_PinConfig;     /*!< This holds the GPIO pin configuration settings */
+}GPIO_Handle_t;
+
+/*********************************************************************************************
+ *                                APIS supported by this driver
+ *        For more information about the APIs please check the function definitions
+ *********************************************************************************************/
+
+/*
+ * Peripheral Clock Setup
+ */
+
+void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t ENorDI);
+
+/*
+ * Init and Deinit
+ */
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
+void GPIO_Deinit(GPIO_RegDef_t *pGPIOx);
+
+/*
+ * Data read and write
+ */
+
+uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
+uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx);
+void GPIO_WriteToOuputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Value);
+void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value);
+void GPIO_ToggleOutPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
+
+/*
+ * IRQ configuration and ISR Handling
+ */
+
+void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI);
+void GPIO_IRQHandling(uint8_t PinNumber);
+
+
+
+
+
+
+
+
+
+
+#endif /* INC_STM32F407XX_GPIO_DRIVER_H_ */

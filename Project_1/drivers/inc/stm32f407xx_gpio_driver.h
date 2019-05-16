@@ -11,6 +11,7 @@
 
 #include "stm32f407xx.h"
 #include <stdint.h>
+
 /*
  * This is a configuration structure for a GPIO pin
  */
@@ -121,7 +122,8 @@ void GPIO_ToggleOutPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
  * IRQ configuration and ISR Handling
  */
 
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI);
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t ENorDI);
 void GPIO_IRQHandling(uint8_t PinNumber);
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority);
 
 #endif /* INC_STM32F407XX_GPIO_DRIVER_H_ */

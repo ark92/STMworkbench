@@ -12,6 +12,34 @@
 
 #define __vo volatile
 
+/***********************************START: Processor Specific Details****************************/
+
+/*
+ * ARM Cortex Mx Processor NVIC ISERx register addresses
+ */
+#define NVIC_ISER0                          ( (__vo uint32_t *)0xE000E100 )
+#define NVIC_ISER1                          ( (__vo uint32_t *)0xE000E104 )
+#define NVIC_ISER2                          ( (__vo uint32_t *)0xE000E108 )
+#define NVIC_ISER3                          ( (__vo uint32_t *)0xE000E10c )
+
+/*
+ * ARM Cortex Mx processor NVIC_ICERx register addresses
+ */
+#define NVIC_ICER0                          ( (__vo uint32_t *)0xE000E180 )
+#define NVIC_ICER1                          ( (__vo uint32_t *)0xE000E184 )
+#define NVIC_ICER2                          ( (__vo uint32_t *)0xE000E188 )
+#define NVIC_ICER3                          ( (__vo uint32_t *)0xE000E18c )
+
+/*
+ * ARM Cortex Mx Processor Priority Register Address Calculation
+ */
+#define NVIC_PR_BASEADDR                    ( (__vo uint32_t *)0xE000E400 )
+
+/*
+ * ARM Cortex Mx Processor number of priority bits implemented in Priority Register
+ */
+#define NO_PR_BITS_IMPLEMENTED              4
+
 /*
  * base addresses of Flash and SRAM memories
  */
@@ -169,10 +197,12 @@ typedef struct _SYSCFG_RegDef_t
 {
 	__vo uint32_t MEMRMP;              /*!< SYSCFG memory remap register                            Address offset: 0x00 */
 	__vo uint32_t PMC;                 /*!< SYSCFG peripheral mode configuration register           Address offset: 0x04 */
-	__vo uint32_t EXTICR1;             /*!< SYSCFG external interrupt configuration register 1      Address offset: 0x08 */
-	__vo uint32_t EXTICR2;             /*!< SYSCFG external interrupt configuration register 2      Address offset: 0x0C */
-	__vo uint32_t EXTICR3;             /*!< SYSCFG external interrupt configuration register 3      Address offset: 0x10 */
-	__vo uint32_t EXTICR4;             /*!< SYSCFG external interrupt configuration register 4      Address offset: 0x14 */
+	__vo uint32_t EXTICR[4];           /*!< SYSCFG external interrupt configuration registers
+	                                        EXTICR[0]: register 1                                   Address offset: 0x08
+	                                        EXTICR[1]: register 2                                   Address offset: 0x0C
+	                                        EXTICR[2]: register 3                                   Address offset: 0x10
+	                                        EXTICR[3]: register 4                                   Address offset: 0x14 */
+	uint32_t RESERVED0[2];
 	__vo uint32_t CMPCR;               /*!< Compensation cell control register                      Address offset: 0x20 */
 }SYSCFG_RegDef_t;
 
@@ -306,16 +336,64 @@ typedef struct _SYSCFG_RegDef_t
 #define GPIOJ_REG_REST()                   do{ ( RCC->AHB1RSTR |= (1 << 9) ); ( RCC->AHB1RSTR &= ~(1 << 9) ); }while(0)
 #define GPIOK_REG_REST()                   do{ ( RCC->AHB1RSTR |= (1 << 10) ); ( RCC->AHB1RSTR &= ~(1 << 10) ); }while(0)
 
+
+/*
+ * Return port code for given GPIOx.
+ */
+#define GPIO_BASEADDR_TO_CODE(x)          ( (x == GPIOA) ? 0 :\
+                                            (x == GPIOB) ? 1 :\
+                                            (x == GPIOC) ? 2 :\
+                                            (x == GPIOD) ? 3 :\
+                                            (x == GPIOE) ? 4 :\
+                                            (x == GPIOF) ? 5 :\
+                                            (x == GPIOG) ? 6 :\
+                                            (x == GPIOH) ? 7 :\
+                                            (x == GPIOI) ? 8 : 0 )
+
+/*
+ * IRQ(Interrupt Request) numbers of STM32F407xx MCU
+ */
+
+#define IRQ_NO_EXTI0                        6
+#define IRQ_NO_EXTI1                        7
+#define IRQ_NO_EXTI2                        8
+#define IRQ_NO_EXTI3                        9
+#define IRQ_NO_EXTI4                        10
+#define IRQ_NO_EXTI9_5                      23
+#define IRQ_NO_EXTI15_10                    40
+
+/*
+ *  Macros for all the possible priority levels
+ */
+
+#define NVIC_IRQ_PRIO0                      0
+#define NVIC_IRQ_PRIO1                      1
+#define NVIC_IRQ_PRIO2                      2
+#define NVIC_IRQ_PRIO3                      3
+#define NVIC_IRQ_PRIO4                      4
+#define NVIC_IRQ_PRIO5                      5
+#define NVIC_IRQ_PRIO6                      6
+#define NVIC_IRQ_PRIO7                      7
+#define NVIC_IRQ_PRIO8                      8
+#define NVIC_IRQ_PRIO9                      9
+#define NVIC_IRQ_PRIO10                     10
+#define NVIC_IRQ_PRIO11                     11
+#define NVIC_IRQ_PRIO12                     12
+#define NVIC_IRQ_PRIO13                     13
+#define NVIC_IRQ_PRIO14                     14
+#define NVIC_IRQ_PRIO15                     15
+
+
 /*
  * Some generic macros
  */
 
-#define ENABLE             1
-#define DISABLE            0
-#define SET                ENABLE
-#define RESET              DISABLE
-#define GPIO_PIN_SET       SET
-#define GPIO_PIN_RESET     RESET
+#define ENABLE                              1
+#define DISABLE                             0
+#define SET                                 ENABLE
+#define RESET                               DISABLE
+#define GPIO_PIN_SET                        SET
+#define GPIO_PIN_RESET                      RESET
 
 
 #include "stm32f407xx_gpio_driver.h"
